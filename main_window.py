@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5 import QtWidgets, QtGui
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -62,7 +62,7 @@ class Ui_MainWindow(object):
         self.label_9.setGeometry(QtCore.QRect(10, 470, 71, 31))
         self.label_9.setObjectName("label_9")
         self.label_10 = QtWidgets.QLabel(self.centralwidget)
-        self.label_10.setGeometry(QtCore.QRect(10, 520, 55, 16))
+        self.label_10.setGeometry(QtCore.QRect(10, 520, 181, 31))
         self.label_10.setObjectName("label_10")
         self.label_11 = QtWidgets.QLabel(self.centralwidget)
         self.label_11.setGeometry(QtCore.QRect(10, 590, 55, 16))
@@ -109,8 +109,7 @@ class Ui_MainWindow(object):
         self.pushButton_2.setText(_translate("MainWindow", "Характеристики юнитов"))
         self.label_8.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Выбор локации</span></p></body></html>"))
         self.label_9.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">1 - луга</span></p></body></html>"))
-        self.label_10.setText(_translate("MainWindow", "TextLabel"))
-        self.label_11.setText(_translate("MainWindow", "TextLabel"))
+        self.label_10.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">2 - снежная долина</span></p></body></html>"))
         self.pushButton_3.setText(_translate("MainWindow", "добавить"))
         self.pushButton_4.setText(_translate("MainWindow", "добавить"))
         self.label_12.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:14pt;\">1000 монет</span></p></body></html>"))
