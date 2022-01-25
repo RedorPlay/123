@@ -461,12 +461,24 @@ class Catapult(pygame.sprite.Sprite):
         a = AnimatedSprite(load_image("catapult_fight.png", -1), 3, 3, self.rect.x, self.rect.y)
         for _ in range(8):
             a.update()
+            if i < len(d):
+                if d[i] == 1 and not fl:
+                    a.image = pygame.transform.flip(a.image, True, False)
+            if i < len(d_1):
+                if d_1[i] == 1 and fl:
+                    a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
             clock.tick(10)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
         self.image = load_image('catapult.png', -1)
+        if i < len(d):
+            if d[i] == 1 and fl:
+                self.image = pygame.transform.flip(self.image, True, False)
+        if i < len(d_1):
+            if d_1[i] == 1 and fl:
+                self.image = pygame.transform.flip(self.image, True, False)
         all_sprites.draw(screen)
 
 
@@ -670,6 +682,9 @@ while run and len(players) > 0 and len(enemies) > 0:
                             and (players[j].rect.y == posy or players[j].rect.y - 1 == posy) \
                             and abs(players[j].rect.x - enemies[i].rect.x) <= 70 \
                             and abs(players[j].rect.y - enemies[i].rect.y) <= 70:
+                        zaglushka = 1
+                    elif isinstance(enemies[i], Catapult) and (players[j].rect.x == posx or players[j].rect.x - 1 == posx) \
+                            and (players[j].rect.y == posy or players[j].rect.y - 1 == posy):
                         zaglushka = 1
                 if zaglushka:
                     enemies[i].animation_fight()
