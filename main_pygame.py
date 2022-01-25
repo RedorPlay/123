@@ -1,8 +1,7 @@
 import pygame
-import sys
 import os
 from QT_window import MyWidget
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QPushButton
 import sys
 
 FPS = 50
@@ -210,12 +209,12 @@ class Tile(pygame.sprite.Sprite):
 class Champion(pygame.sprite.Sprite):
     def __init__(self, pos_x, pos_y):
         super().__init__(player_group, all_sprites)
-        self.image = load_image("champion_norm.png", -1)
+        self.image = load_image("champion.png", -1)
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Knight'
-        self.damage = 60
-        self.hp = 50
+        self.damage = 75
+        self.hp = 100
         self.agility = 5
 
     def animation_fight(self):
@@ -237,7 +236,7 @@ class Champion(pygame.sprite.Sprite):
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
-        self.image = load_image('champion_norm.png', -1)
+        self.image = load_image('champion.png', -1)
         if i < len(d):
             if d[i] == 1 and fl:
                 self.image = pygame.transform.flip(self.image, True, False)
@@ -254,9 +253,9 @@ class Hydra(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Hydra'
-        self.damage = 60
-        self.hp = 50
-        self.agility = 5
+        self.damage = 100
+        self.hp = 200
+        self.agility = 3
 
     def animation_fight(self):
         if ex.true_3:
@@ -294,8 +293,8 @@ class Skeleton(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Skeleton'
-        self.damage = 60
-        self.hp = 50
+        self.damage = 30
+        self.hp = 75
         self.agility = 5
 
     def animation_fight(self):
@@ -334,8 +333,8 @@ class Ghost(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Skeleton'
-        self.damage = 60
-        self.hp = 50
+        self.damage = 50
+        self.hp = 75
         self.agility = 5
 
     def animation_fight(self):
@@ -374,8 +373,8 @@ class Greendragon(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Dragon'
-        self.damage = 40
-        self.hp = 80
+        self.damage = 150
+        self.hp = 300
         self.agility = 3
 
     def animation_fight(self):
@@ -414,9 +413,9 @@ class Wolf(pygame.sprite.Sprite):
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
         self.name = 'Wolf'
-        self.damage = 20
-        self.hp = 20
-        self.agility = 3
+        self.damage = 50
+        self.hp = 50
+        self.agility = 10
 
     def animation_fight(self):
         if ex.true_3:
@@ -453,8 +452,8 @@ class Catapult(pygame.sprite.Sprite):
         self.image = load_image("catapult.png", -1)
         self.rect = self.image.get_rect().move(
             tile_width * pos_x, tile_height * pos_y)
-        self.damage = 80
-        self.hp = 80
+        self.damage = 50
+        self.hp = 100
         self.agility = 0
 
     def animation_fight(self):
@@ -472,8 +471,9 @@ class Catapult(pygame.sprite.Sprite):
 
 
 start = True
-#abc = pygame.mixer.Sound('data/01_-_Main_Menu.mp3')
-#abc.play()
+abc = pygame.mixer.Sound('data/01 - Main Menu.mp3')
+abc.play()
+abc.set_volume(0.25)
 while start:
     intro_text = ["ЗАСТАВКА", "",
                   "Правила игры",
@@ -580,22 +580,22 @@ while run and len(players) > 0 and len(enemies) > 0:
                     player_group.draw(screen)
                     pygame.display.flip()
                 zaglushka = 0
-                print(players[i].rect.x, players[i].rect.y)
                 posx = event.pos[0] // board.cell_size * board.cell_size
                 posy = event.pos[1] // board.cell_size * board.cell_size
                 for j in range(len(enemies)):
-                    print(enemies[j].rect.x, enemies[j].rect.y)
                     if (enemies[j].rect.x == posx or enemies[j].rect.x - 1 == posx) \
                             and (enemies[j].rect.y == posy or enemies[j].rect.y - 1 == posy) \
                             and abs(players[i].rect.x - enemies[j].rect.x) <= 70 \
                             and abs(players[i].rect.y - enemies[j].rect.y) <= 70:
                         zaglushka = 1
-                        print('zaglushka')
+                    elif isinstance(players[i], Catapult) and (enemies[j].rect.x == posx or enemies[j].rect.x - 1 == posx) \
+                            and (enemies[j].rect.y == posy or enemies[j].rect.y - 1 == posy):
+                        zaglushka = 1
                 if zaglushka:
                     players[i].animation_fight()
                     for j in range(len(enemies)):
                         if (enemies[j].rect.x == posx or enemies[j].rect.x - 1 == posx) \
-                            and (enemies[j].rect.y == posy or enemies[j].rect.y - 1 == posy):
+                                and (enemies[j].rect.y == posy or enemies[j].rect.y - 1 == posy):
                             enemies[j].hp -= players[i].damage
                             if enemies[j].hp <= 0:
                                 player_group.remove(enemies[j])
@@ -676,7 +676,7 @@ while run and len(players) > 0 and len(enemies) > 0:
                     for j in range(len(players)):
                         try:
                             if (players[j].rect.x == posx or players[j].rect.x - 1 == posx) \
-                            and (players[j].rect.y == posy or players[j].rect.y - 1 == posy):
+                                    and (players[j].rect.y == posy or players[j].rect.y - 1 == posy):
                                 players[j].hp -= enemies[i].damage
                                 if players[j].hp <= 0:
                                     player_group.remove(players[j])
@@ -700,9 +700,10 @@ while run and len(players) > 0 and len(enemies) > 0:
         d = [0] * len(players)
         d_1 = [1] * len(enemies)
         ex.true_2 = 0
-        #abc.stop()
-        #abc = pygame.mixer.Sound('data/17_-_Battle_-_Academy.mp3')
-        #abc.play()
+        abc.stop()
+        abc = pygame.mixer.Sound('data/17 - Battle - Academy.mp3')
+        abc.play()
+        abc.set_volume(0.25)
     all_sprites.draw(screen)
     player_group.draw(screen)
     clock.tick(10)
@@ -717,7 +718,12 @@ while run and len(players) > 0 and len(enemies) > 0:
             fon = pygame.transform.scale(load_image('end.png'), (width, height))
             screen.blit(fon, (0, 0))
             font = pygame.font.Font(None, 50)
-            text = font.render("""    Results    """, True, pygame.Color('#D2691E'))
+            if len(players) > len(enemies):
+                text = font.render("Победил Игрок 1", True, pygame.Color('#D2691E'))
+            else:
+                text = font.render("Победил Игрок 2", True, pygame.Color('#D2691E'))
+            screen.blit(text, (205, 60))
+            text = font.render("""    Результаты    """, True, pygame.Color('#D2691E'))
             text_x = width // 2 - text.get_width() // 2
             text_y = height // 2 - text.get_height() // 2 - 200
             text_w = text.get_width()
