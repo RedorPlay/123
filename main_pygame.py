@@ -87,7 +87,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
 
 def load_level(filename):
-    filename = "data/" + filename
+    # filename = "data/" + filename
     # читаем уровень, убирая символы перевода строки
     with open(filename, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
@@ -527,7 +527,7 @@ clock = pygame.time.Clock()
 players = []
 enemies = []
 results = [[], []]
-players, enemies, level_x, level_y = generate_level(load_level('map.txt'))
+players, enemies, level_x, level_y = generate_level(load_level('data/map.txt'))
 fl = 0
 d = [0] * len(players)
 d_1 = [1] * len(enemies)
@@ -711,7 +711,7 @@ while run and len(players) > 0 and len(enemies) > 0:
         tiles_group = pygame.sprite.Group()
         player_group = pygame.sprite.Group()
         screen.fill((0, 0, 0))
-        players, enemies, level_x, level_y = generate_level(load_level('map.txt'))
+        players, enemies, level_x, level_y = generate_level(load_level('data/map.txt'))
         d = [0] * len(players)
         d_1 = [1] * len(enemies)
         ex.true_2 = 0
