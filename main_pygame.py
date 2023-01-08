@@ -215,6 +215,7 @@ class Champion(pygame.sprite.Sprite):
         self.name = 'Knight'
         self.damage = 75
         self.hp = 100
+        self.max_hp = 100
         self.agility = 5
 
     def animation_fight(self):
@@ -232,7 +233,7 @@ class Champion(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -255,6 +256,7 @@ class Hydra(pygame.sprite.Sprite):
         self.name = 'Hydra'
         self.damage = 100
         self.hp = 200
+        self.max_hp = 200
         self.agility = 3
 
     def animation_fight(self):
@@ -272,7 +274,7 @@ class Hydra(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -295,6 +297,7 @@ class Skeleton(pygame.sprite.Sprite):
         self.name = 'Skeleton'
         self.damage = 30
         self.hp = 75
+        self.max_hp = 75
         self.agility = 5
 
     def animation_fight(self):
@@ -312,7 +315,7 @@ class Skeleton(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -335,6 +338,7 @@ class Ghost(pygame.sprite.Sprite):
         self.name = 'Skeleton'
         self.damage = 50
         self.hp = 75
+        self.max_hp = 75
         self.agility = 5
 
     def animation_fight(self):
@@ -352,7 +356,7 @@ class Ghost(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -375,6 +379,8 @@ class Greendragon(pygame.sprite.Sprite):
         self.name = 'Dragon'
         self.damage = 150
         self.hp = 300
+        self.max_hp = 300
+        self.max_hp = 300
         self.agility = 3
 
     def animation_fight(self):
@@ -392,7 +398,7 @@ class Greendragon(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -415,6 +421,7 @@ class Wolf(pygame.sprite.Sprite):
         self.name = 'Wolf'
         self.damage = 50
         self.hp = 50
+        self.max_hp = 50
         self.agility = 10
 
     def animation_fight(self):
@@ -432,7 +439,7 @@ class Wolf(pygame.sprite.Sprite):
                 if d_1[i] == 1 and fl:
                     a.image = pygame.transform.flip(a.image, True, False)
             player_group.draw(screen)
-            clock.tick(30)
+            clock.tick(20)
             pygame.display.flip()
         all_sprites.remove(a)
         player_group.remove(a)
@@ -454,6 +461,7 @@ class Catapult(pygame.sprite.Sprite):
             tile_width * pos_x, tile_height * pos_y)
         self.damage = 50
         self.hp = 100
+        self.max_hp = 100
         self.agility = 0
 
     def animation_fight(self):
@@ -726,6 +734,14 @@ while run and len(players) > 0 and len(enemies) > 0:
         pygame.draw.rect(screen, pygame.Color('Orange'), (players[i].rect.x, players[i].rect.y, 70, 70), 2)
     elif fl == 1 and len(enemies) > 0 and len(players) > 0:
         pygame.draw.rect(screen, pygame.Color('Red'), (enemies[i].rect.x, enemies[i].rect.y, 70, 70), 2)
+    for g in range(len(players)):
+        pygame.draw.rect(screen, pygame.Color('Orange'), (players[g].rect.x, players[g].rect.y + 75, 70, 8))
+        pygame.draw.rect(screen, pygame.Color('Black'), (players[g].rect.x + int(70 * (players[g].hp / players[g].max_hp)),
+                                                         players[g].rect.y + 75, 70 - int(70 * (players[g].hp / players[g].max_hp)), 8))
+    for g in range(len(enemies)):
+        pygame.draw.rect(screen, pygame.Color('Red'), (enemies[g].rect.x, enemies[g].rect.y + 75, 70, 8))
+        pygame.draw.rect(screen, pygame.Color('Black'), (enemies[g].rect.x + int(70 * (enemies[g].hp / enemies[g].max_hp)),
+                                                         enemies[g].rect.y + 75, 70 - int(70 * (enemies[g].hp / enemies[g].max_hp)), 8))
     pygame.display.flip()
     if len(players) == 0 or len(enemies) == 0:
         start = True
